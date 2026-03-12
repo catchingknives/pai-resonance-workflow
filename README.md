@@ -102,13 +102,61 @@ No "why" field. Resonance is a signal from the unconscious — forcing a rationa
 | **Review** | "review resonance", or surfaced at session start | Show due items, re-rate each via structured question |
 | **Promote** | "promote RES-N", or during Day 90 review | Move to target TELOS file, archive in RESONANCE.md |
 
-## Scope: RESONANCE.md vs BOOKS.md / MOVIES.md
+## Example Capture
+```
+❯ R3: "Productivity is a trap. Becoming more efficient just makes you more rushed, and trying to
+clear the decks simply makes them fill up again faster. Nobody in the history of humanity has ever
+achieved “work-life balance,” whatever that might be, and you certainly won’t get there by copying
+the “six things successful people do before 7:00 a.m.” The day will never arrive when you finally
+have everything under control — when the flood of emails has been contained; when your to-do lists
+have stopped getting longer; when you’re meeting all your obligations at work and in your home
+life; when nobody’s angry with you for missing a deadline or dropping the ball; and when the fully
+optimized person you’ve become can turn, at long last, to the things life is really supposed to be
+about." - Oliver Burkeman
 
-These don't collide — different granularity:
-- **BOOKS.md** = the book as a whole ("I love this book")
-- **RESONANCE.md** = a specific moment of recognition from *anywhere*
+(maybe you can find the source and add it)
 
-A book can be in BOOKS.md and a quote from it independently in RESONANCE.md. The `Source` field handles the link.
+⏺ Bash(curl -s -X POST http://localhost:8888/notify -H "Content-Type: application/json" -d
+      '{"message": "Running the Resonance workflow in the Telos skill to capture",…)
+  ⎿  (No output)
+
+⏺ Running the Resonance workflow in the Telos skill to capture...
+
+⏺ Web Search("Oliver Burkeman "Productivity is a trap" "becoming more efficient" book source")
+  ⎿  Did 1 search in 5s
+
+⏺ Found it — Four Thousand Weeks: Time Management for Mortals (2021). Now capturing.
+
+⏺ Read 1 file (ctrl+o to expand)
+
+⏺ Update(PAI/USER/TELOS/RESONANCE.md)
+  ⎿  Added 10 lines
+      39  - **Day 90:** [pending 2026-06-07]
+      40  - **Target:** WISDOM.md > Borrowed Wisdom
+      41
+      42 +### RES-2: Productivity is a trap — efficiency just makes you more rushed, clearing
+         + the decks makes them fill up faster
+      43 +- **Rating:** R3
+      44 +- **Source:** Oliver Burkeman, *Four Thousand Weeks: Time Management for Mortals* (
+         +2021)
+      45 +- **Captured:** 2026-03-12
+      46 +- **Day 3:** [pending 2026-03-15]
+      47 +- **Day 7:** [pending 2026-03-19]
+      48 +- **Day 40:** [pending 2026-04-21]
+      49 +- **Day 90:** [pending 2026-06-10]
+      50 +- **Target:** WISDOM.md > Borrowed Wisdom
+      51 +
+      52  ---
+      53
+      54  ## Promoted
+
+⏺ ════ PAI | NATIVE MODE ═══════════════════════
+  🗒️ TASK: Capture Burkeman resonance R3 item
+  🔧 CHANGE: RES-2 added to RESONANCE.md Active section
+  ✅ VERIFY: Entry written with R3, source traced to Four Thousand Weeks
+  🗣️ PAI: RES-2 captured — Burkeman's productivity trap from Four Thousand Weeks. Day 3 check-in
+  on March 15.
+```
 
 ## Architecture
 
