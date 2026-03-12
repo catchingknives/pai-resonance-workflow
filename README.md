@@ -4,6 +4,8 @@
 
 Capture ideas and insights that strike hard, then subject them to scheduled re-rating to separate genuine signal from novelty. Only what truly endures gets promoted into your core life philosophy (TELOS).
 
+I believe that things that *really* reaonate with you, are messages from the unconscious. You might now know why this resonates with you, but that's not what matters. It's the fact that it does.
+
 ## The Concept
 
 Most "save for later" systems become graveyards. Resonance is different — it has a **decay lifecycle**. You capture at the moment of impact (R3 or R4 only — low resonance is noise), then the system forces you to re-evaluate at increasing intervals. What survives the filter earns its place in TELOS. What fades gets archived — and what fades reveals what endures.
