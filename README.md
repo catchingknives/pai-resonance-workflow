@@ -1,6 +1,6 @@
 # PAI Resonance Workflow
 
-**A time-decay insight tracking system for PAI (Personal AI Infrastructure).**
+**A time-decay insight tracking system for [PAI](https://github.com/danielmiessler/Personal_AI_Infrastructure) (Personal AI Infrastructure).**
 
 Capture ideas and insights that strike hard, then subject them to scheduled re-rating to separate genuine signal from novelty. Only what truly endures gets promoted into your core life philosophy (TELOS).
 
