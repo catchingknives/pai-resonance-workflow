@@ -87,7 +87,7 @@ else
     fi
 fi
 
-# ── 4. SKILL.md — add routing entry ──
+# ── 4a. SKILL.md — add routing entry ──
 SKILLMD="$SKILL_DIR/SKILL.md"
 if grep -q "Resonance" "$SKILLMD" 2>/dev/null; then
     skip "Resonance routing already in SKILL.md"
@@ -102,6 +102,28 @@ else
         echo -e "${YELLOW}[WARN]${NC} Could not find WriteReport row in SKILL.md — manual patch needed"
         echo "  Add this row to the Workflow Routing table:"
         echo '  | **Resonance** | "resonance", "R3", "R4", "that resonated", "capture resonance" | `Workflows/Resonance.md` |'
+    fi
+fi
+
+# ── 4b. SKILL.md — add resonance triggers to description frontmatter ──
+# The description: field in frontmatter is surfaced as the skill's USE WHEN keywords.
+# Without these, the AI cannot match "R3"/"R4" to the Telos skill at skill-selection time.
+if grep -q 'resonance, R3, R4' "$SKILLMD" 2>/dev/null; then
+    skip "Resonance triggers already in SKILL.md description"
+else
+    if grep -q 'USE WHEN' "$SKILLMD"; then
+        # Append resonance triggers before the trailing period of the USE WHEN clause
+        sed -i.bak 's/\(USE WHEN.*\)\.$/\1, resonance, R3, R4, capture resonance, that resonated, review resonance./' "$SKILLMD"
+        rm -f "$SKILLMD.bak"
+        if grep -q 'resonance, R3, R4' "$SKILLMD"; then
+            ok "Added resonance triggers to SKILL.md description"
+        else
+            echo -e "${YELLOW}[WARN]${NC} Could not patch USE WHEN line — manual patch needed"
+            echo "  Add 'resonance, R3, R4, capture resonance, that resonated, review resonance' to the USE WHEN keywords in the description: frontmatter"
+        fi
+    else
+        echo -e "${YELLOW}[WARN]${NC} Could not find USE WHEN in SKILL.md description — manual patch needed"
+        echo "  Add 'resonance, R3, R4, capture resonance, that resonated, review resonance' to the USE WHEN keywords in the description: frontmatter"
     fi
 fi
 

@@ -6,14 +6,15 @@ All paths are relative to the PAI root (`~/.claude` by default).
 
 ---
 
-## Overview: 6 Changes
+## Overview: 7 Changes
 
 | # | File | Action | Type |
 |---|------|--------|------|
 | 1 | `PAI/USER/TELOS/RESONANCE.md` | Create new file | Copy |
 | 2 | `skills/Telos/Tools/UpdateTelos.ts` | Add to VALID_FILES array | Patch |
 | 3 | `skills/Telos/Workflows/Resonance.md` | Create new file | Copy |
-| 4 | `skills/Telos/SKILL.md` | Add routing table row | Patch |
+| 4a | `skills/Telos/SKILL.md` | Add routing table row | Patch |
+| 4b | `skills/Telos/SKILL.md` | Add triggers to `description:` USE WHEN | Patch |
 | 5 | `hooks/lib/learning-readback.ts` | Add exported function | Patch |
 | 6 | `hooks/LoadContext.hook.ts` | Import + call new function | Patch |
 
@@ -72,7 +73,7 @@ const VALID_FILES = [
 
 ---
 
-## Step 4: Add Routing Entry to SKILL.md
+## Step 4a: Add Routing Entry to SKILL.md
 
 **Target:** `skills/Telos/SKILL.md`
 **What to find:** The "Workflow Routing" table (a markdown table mapping workflow names to trigger phrases and files)
@@ -85,6 +86,28 @@ const VALID_FILES = [
 **Where:** After the last existing row in the table (typically WriteReport).
 
 **How to find if the structure changed:** Search for `Workflow Routing` or look for a markdown table with columns like `Workflow | Trigger | File`. The table format is standard across PAI skills.
+
+---
+
+## Step 4b: Add Resonance Triggers to SKILL.md Description
+
+**Target:** `skills/Telos/SKILL.md`
+**What to find:** The `description:` field in the YAML frontmatter, specifically the `USE WHEN` keyword list
+**Why this matters:** The `description:` frontmatter is the **only** text surfaced to the AI at session start for skill matching. The routing table (Step 4a) is only consulted *after* the skill is already invoked. Without these keywords in `USE WHEN`, bare triggers like "R3" or "R4" will never reach the Resonance workflow.
+
+**What to change:** Append resonance trigger keywords to the end of the `USE WHEN` clause.
+
+**Before:**
+```
+description: Life OS and project analysis — ...USE WHEN Telos, life goals, ..., dashboard, n=24.
+```
+
+**After:**
+```
+description: Life OS and project analysis — ...USE WHEN Telos, life goals, ..., dashboard, n=24, resonance, R3, R4, capture resonance, that resonated, review resonance.
+```
+
+**How to find if the structure changed:** Search for `USE WHEN` in the frontmatter `description:` field. The pattern is a comma-separated keyword list that the AI matches against user input. Every PAI skill uses this convention.
 
 ---
 
