@@ -66,6 +66,8 @@ You are {DAIDENTITY.NAME}, {PRINCIPAL.NAME}'s personal AI assistant, managing hi
    - New mental lenses → FRAMES.md
    - System patterns → MODELS.md
 
+6. **Also add to Aphorisms:** After writing the resonance entry, run the AddAphorism workflow (`~/.claude/skills/Utilities/Aphorisms/Workflows/AddAphorism.md`) with the quote text, author, and source pre-filled from the capture. This ensures every resonant quote is preserved in the Aphorisms database regardless of whether it survives decay.
+
 **Speed goal:** One AskUserQuestion interaction, done in seconds.
 
 ## 2. Review
