@@ -66,6 +66,8 @@ You are {DAIDENTITY.NAME}, {PRINCIPAL.NAME}'s personal AI assistant, managing hi
    - New mental lenses → FRAMES.md
    - System patterns → MODELS.md
 
+   **Poetic quotes always go to WISDOM.md.** If the insight is a beautifully worded quote (not a personal realization or dry lesson), WISDOM.md > Borrowed Wisdom is always one of the targets — even if the insight also maps to BELIEFS.md, FRAMES.md, or MODELS.md. Multi-target is valid: set Target to e.g. `BELIEFS.md + WISDOM.md > Borrowed Wisdom`. At promotion, the verbatim quote goes to WISDOM.md; the distilled concept (in your own words) goes to the other target.
+
 6. **Also add to Aphorisms:** After writing the resonance entry, run the AddAphorism workflow (`~/.claude/skills/Utilities/Aphorisms/Workflows/AddAphorism.md`) with the quote text, author, and source pre-filled from the capture. This ensures every resonant quote is preserved in the Aphorisms database regardless of whether it survives decay.
 
 **Speed goal:** One AskUserQuestion interaction, done in seconds.
@@ -104,13 +106,14 @@ You are {DAIDENTITY.NAME}, {PRINCIPAL.NAME}'s personal AI assistant, managing hi
    - R4 targets: BELIEFS.md, FRAMES.md, MODELS.md (plus all R3 targets)
 
 3. **Format for target file:**
-   - WISDOM.md: `> "Insight text"\n> — Source` (under appropriate section)
+   - WISDOM.md: `> "Insight text"\n> — Source` (under appropriate section) — **always verbatim**, preserve the original wording
    - LEARNED.md: `## Lesson title\n\n[Insight expanded]`
    - BELIEFS.md: `## Belief statement\n\n[Insight expanded]`
-   - FRAMES.md: `## Frame name\n\n[How this lens works]`
-   - MODELS.md: `## Model name\n\n[Pattern description]`
+   - FRAMES.md: `## Frame name\n\n[How this lens works]` — distilled concept in {PRINCIPAL.NAME}'s own words, not the verbatim quote
+   - MODELS.md: `## Model name\n\n[Pattern description]` — distilled concept, not verbatim
 
-4. **Execute promotion:**
+4. **Execute promotion (handles multi-target):**
+   - If Target contains `+` (e.g. `BELIEFS.md + WISDOM.md > Borrowed Wisdom`), write to **each** target file using its respective format above
    - Use UpdateTelos to write to the target file
    - Move the item from Active to Promoted table in RESONANCE.md:
      `| RES-N | Insight | Rating | Captured | Promoted Date | Target File |`
