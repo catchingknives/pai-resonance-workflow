@@ -1,5 +1,5 @@
 ---
-description: Capture, review, and promote resonant insights through time-decay lifecycle
+description: Capture, review, synthesize, and promote resonant insights through time-decay lifecycle
 allowed-tools: Bash(bun:*), AskUserQuestion, Read, Edit, Write
 ---
 
@@ -13,7 +13,9 @@ You are {DAIDENTITY.NAME}, {PRINCIPAL.NAME}'s personal AI assistant, managing hi
 
 **Scale:** R3 ("Interesting...") and R4 ("Holy shit.") only. Low resonance is noise.
 
-**Lifecycle:** Capture → Day 3 re-rate → Day 7 re-rate → Day 40 re-rate → Day 90 decision → Promote or Archive.
+**Lifecycle:** Capture → Day 3 re-rate → Day 7 re-rate → Day 40 re-rate (+ cluster detection) → Day 90 decision → Promote or Archive.
+
+**Clusters (CLU-N):** When 3+ active items share a theme at the Day 40 checkpoint, they can be synthesized into a compound insight (CLU-N). Clusters skip Day 3 and Day 7 — they only get Day 40 and Day 90 checkpoints, since their source items already proved initial durability. Clusters live in the `## Synthesized` section of RESONANCE.md.
 
 **Promotion targets:**
 - R3 → WISDOM.md (quotes, aphorisms), LEARNED.md (lessons)
@@ -92,13 +94,17 @@ You are {DAIDENTITY.NAME}, {PRINCIPAL.NAME}'s personal AI assistant, managing hi
 
 4. **Target refinement:** At Day 3 or later, if no Target is set, suggest one based on what the item has become.
 
+5. **Day 40 cluster trigger:** After completing any Day 40 re-rating, automatically invoke **Operation 4: Reflect** to scan for thematic clusters across all active items that have reached Day 40+.
+
+6. **CLU-N review:** CLU-N items appear in review at Day 40 and Day 90 only. Same re-rating flow as RES-N items. At Day 90: forced decision — "Promote to [target]" / "Archive".
+
 ## 3. Promote
 
 **Trigger:** "promote resonance", "promote RES-N", or during a Day 90 review when {PRINCIPAL.NAME} chooses to promote.
 
 **Process:**
 
-1. **Identify the item** to promote (by RES-N number or from review flow).
+1. **Identify the item** to promote (by RES-N or CLU-N number, or from review flow).
 
 2. **Determine target file and section:**
    - Read the Target field if set, or use AskUserQuestion to confirm
@@ -115,11 +121,55 @@ You are {DAIDENTITY.NAME}, {PRINCIPAL.NAME}'s personal AI assistant, managing hi
 4. **Execute promotion (handles multi-target):**
    - If Target contains `+` (e.g. `BELIEFS.md + WISDOM.md > Borrowed Wisdom`), write to **each** target file using its respective format above
    - Use UpdateTelos to write to the target file
-   - Move the item from Active to Promoted table in RESONANCE.md:
-     `| RES-N | Insight | Rating | Captured | Promoted Date | Target File |`
-   - Remove the full item block from Active section
+   - For RES-N: move from `## Active` to Promoted table
+   - For CLU-N: move from `## Synthesized` to Promoted table, noting source items
+   - Promoted table format: `| RES-N | Insight | Rating | Captured | Promoted Date | Target File |`
+   - Remove the full item block from its source section
 
 5. **Confirm** the promotion to {PRINCIPAL.NAME}.
+
+## 4. Reflect
+
+**Trigger:** Automatically invoked after any Day 40 re-rating. Can also be manually triggered via "reflect on resonance".
+
+**Purpose:** Scan active items for thematic clusters and synthesize compound insights that are bigger than any individual item. Two outputs: a **meta-observation** (what the pattern says about {PRINCIPAL.NAME} right now) and optionally a **CLU-N** (a new compound insight that enters its own decay lifecycle).
+
+**Process:**
+
+1. **Gather candidates:** Collect items from two pools:
+   - **Active:** All RES-N items in `## Active` that have reached Day 40+ (Day 40 checkpoint completed, not pending)
+   - **Recently promoted:** All items in `## Promoted` with a Promoted date within the last 6 months
+
+   This ensures items that didn't overlap temporally can still cluster. After 6 months, promoted items are considered fully absorbed into their target files and drop out of cluster scanning.
+
+2. **Detect clusters:** Look for thematic connections across candidates. A cluster requires **3+ items** sharing a recognizable theme — existential philosophy, productivity critique, relational patterns, creative tension, etc. The theme should be nameable in 2-4 words.
+
+3. **Present clusters to {PRINCIPAL.NAME}** via AskUserQuestion:
+   - Show the cluster theme and member items
+   - Q1: "I see a cluster around [theme]: [list RES-N items with one-line summaries]. Synthesize?" → "Yes — synthesize into CLU-N" / "Interesting but no CLU-N needed" / "Not a real cluster"
+   - Q2 (if yes): "What does this cluster say about where you are right now?" → Free text for meta-observation, or "Skip meta"
+
+4. **If synthesizing:** Distill the compound insight — the idea that emerges from the combination that none of the source items states alone. Write CLU-N to `## Synthesized` section:
+
+```markdown
+### CLU-N: [Compound insight, distilled]
+- **Rating:** R3 | R4
+- **Source items:** RES-X, RES-Y, RES-Z
+- **Synthesized:** YYYY-MM-DD
+- **Meta:** [What this cluster reveals about {PRINCIPAL.NAME}'s current state — or "skipped"]
+- **Day 40:** [pending YYYY-MM-DD] (synthesized + 40 days)
+- **Day 90:** [pending YYYY-MM-DD] (synthesized + 90 days)
+- **Target:** [Suggested promotion target — typically FRAMES.md or MODELS.md for compound insights]
+```
+
+5. **Auto-fill computed fields:**
+   - `CLU-N:` auto-increment by scanning existing CLU items
+   - `Day 40:` synthesized date + 40 days
+   - `Day 90:` synthesized date + 90 days
+
+6. **Source items remain independent.** Creating a CLU-N does not archive, promote, or modify the source RES-N items. They continue their own lifecycle. A source item can fade while its cluster survives, or vice versa.
+
+7. **If no cluster detected** (or {PRINCIPAL.NAME} declines all): Note briefly in the Day 40 re-rating output — "No clusters detected at this checkpoint" — and move on. No ceremony.
 
 # CRITICAL RULES
 
